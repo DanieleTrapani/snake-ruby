@@ -1,15 +1,14 @@
 class Snake
-  attr_accessor :x, :y
+  attr_accessor :x, :y, :body
 
   def initialize
-    @x = 200
-    @y = 200
+    @body = [[200, 200]]
     @dir_x = 1
     @dir_y = 0
   end
 
   def dead?
-    @x.negative? || @x > 580 || @y.negative? || @y > 380
+    @body[0][0].negative? || @body[0][0] > 580 || @body[0][1].negative? || @body[0][1] > 380
   end
 
   def go_left
@@ -41,7 +40,12 @@ class Snake
   end
 
   def move
-    @x += @dir_x * 20
-    @y += @dir_y * 20
+    @body.last[0] = @body.first[0] + @dir_x * 20
+    @body.last[1] = @body.first[1] + @dir_y * 20
+    @body.unshift(@body.pop)
+  end
+
+  def grow
+    @body << [@body.last[0] - (25 * @dir_x), @body.last[1] - (25 * @dir_y)]
   end
 end
