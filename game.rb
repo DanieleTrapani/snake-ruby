@@ -1,7 +1,8 @@
 require 'gosu'
+require_relative 'food'
+require_relative 'snake'
 class Game < Gosu::Window
   def initialize
-    # puts update_interval
     super 600, 400
     self.caption = 'Snake Game'
     @snake = Snake.new
@@ -47,67 +48,6 @@ end
 # TODO: change the snake to be an array of coordinates
 # TODO: update the death condition to be true if array.uniq.length is diff than array.length (2 coordinates overlap)
 # TODO: when the snake eats it grows: pushes a new segment to the array. Update the move method so it changes each of the segments accordingly.
-class Snake
-  attr_accessor :x, :y
-
-  def initialize
-    @x = 200
-    @y = 200
-    @dir_x = 1
-    @dir_y = 0
-  end
-
-  def dead?
-    @x.negative? || @x > 580 || @y.negative? || @y > 380
-  end
-
-  def go_left
-    return if @dir_x == 1
-
-    @dir_x = -1
-    @dir_y = 0
-  end
-
-  def go_right
-    return if @dir_x == -1
-
-    @dir_x = 1
-    @dir_y = 0
-  end
-
-  def go_up
-    return if @dir_y == 1
-
-    @dir_x = 0
-    @dir_y = -1
-  end
-
-  def go_down
-    return if @dir_y == -1
-
-    @dir_x = 0
-    @dir_y = 1
-  end
-
-  def move
-    @x += @dir_x * 20
-    @y += @dir_y * 20
-  end
-end
-
-class Food
-  attr_accessor :x, :y
-
-  def initialize
-    @x = (0..580).each_slice(20).map(&:first).sample
-    @y = (0..380).each_slice(20).map(&:first).sample
-  end
-
-  def randomize
-    @x = (0..580).each_slice(20).map(&:first).sample
-    @y = (0..380).each_slice(20).map(&:first).sample
-  end
-end
 
 snake = Game.new
 snake.update_interval = 120.0
