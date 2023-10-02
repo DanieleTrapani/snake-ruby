@@ -29,6 +29,7 @@ class Game < Gosu::Window
       @death_sound.play
       @score = 0
       sleep(1.5)
+      @food.randomize
       @snake = Snake.new
     end
     return unless @snake.body[0][0] == @food.x && @snake.body[0][1] == @food.y
